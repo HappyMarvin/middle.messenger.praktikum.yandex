@@ -1,0 +1,25 @@
+include ../components/content/content.pug
+include ../components/head/head.pug
+include ../components/form/form.pug
+include ../components/textInput/textInput.pug
+include ../components/button/button.pug
+doctype html
+html(lang="ru")
+    +head('Профиль')
+        link(rel="stylesheet", href="../index.css")
+    +content
+        +form('Профиль', 'Авторизоваться', './sign-up.pug', 'Нет аккаунта?')(class='profile__form')
+            .profile__avatar
+            +textInput('Почта','email', 'email', 'form__text-input-wrapper')(value='mail@mail.ru')
+            +textInput('Логин','text', 'login', 'form__text-input-wrapper')(value='myLogin')
+            +textInput('Имя','text', 'first_name', 'form__text-input-wrapper')(value='Артемий')
+            +textInput('Фамилия','text', 'second_name', 'form__text-input-wrapper')(value='Лебедев')
+            +textInput('Телефон','phone', 'phone', 'form__text-input-wrapper')(value='8-800-00-00')
+            +button('Сохранить') 
+            h2.profile__subtitle Изменить пароль
+            +textInput('Пароль','password', 'password', 'form__text-input-wrapper')
+            +textInput('Пароль (ещё раз)','password', 'password2', 'form__text-input-wrapper')
+            +button('Изменить')
+            h2.profile__subtitle Ссылка на аватар
+            +textInput('Имя','text', 'first_name', 'form__text-input-wrapper')
+            +button('Загрузить аватар') 
