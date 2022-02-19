@@ -11,3 +11,7 @@
 ## Макет
 
 https://www.figma.com/file/TwqcgVrBrzWGBtp36z6q26/Chat-(Copy)?node-id=0%3A1
+
+## Проект на Netlify
+
+https://romantic-montalcini-deffe4.netlify.app/
