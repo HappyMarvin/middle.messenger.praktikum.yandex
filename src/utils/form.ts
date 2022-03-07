@@ -70,7 +70,7 @@ export class Form extends Block {
             input.props.error = 'Неверный формат';
             this.addInputValidation(input);
         }
-        if (e?.type === 'input' || e?.type === 'focus') {
+        if (e?.type === 'input' || e?.type === 'focus'  || e?.type === 'blur') {
             const el = document.getElementById(input.props.inputId) as HTMLInputElement;
             el.focus();
             el.selectionStart = el.value.length;
