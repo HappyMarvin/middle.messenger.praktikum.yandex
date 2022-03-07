@@ -102,6 +102,10 @@ export class Form extends Block {
             input.props.value = (e.target as HTMLInputElement).value;
             this.checkInput(e, input, inputElement);
         })
+        inputElement.addEventListener('blur', (e) => {
+            input.props.value = (e.target as HTMLInputElement).value;
+            this.checkInput(e, input, inputElement);
+        })
     }
 
 
