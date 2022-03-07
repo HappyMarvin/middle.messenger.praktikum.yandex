@@ -1,0 +1,10 @@
+include ../components/head/head.pug
+include ../components/content/content.pug
+include ../components/error-block/errorBlock.pug
+doctype html
+html(lang="ru")
+    +head('404')
+        link(rel="stylesheet", href="../index.css")
+    +content
+        +error-block('404', 'Не туда попали')
+        

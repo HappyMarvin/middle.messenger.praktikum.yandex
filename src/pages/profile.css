@@ -1,0 +1,17 @@
+.profile__form {
+    max-width: 500px;
+}
+
+.profile__subtitle {
+    margin: 40px 0 20px 0;
+    font-size: 16px;
+}
+
+.profile__avatar {
+    display: block;
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    background-image: url('./../images/avatar.jpeg');
+    background-size: cover;
+}

@@ -1,0 +1,14 @@
+{
+    "modules": false,
+    "plugins": {
+      "autoprefixer": {
+        "grid": true,
+        "flexbox": true,
+          "overrideBrowserslist": [
+              "last 1 version",
+              "> 1%",
+              "IE 10"
+            ]
+      }
+    }
+  }

@@ -1,0 +1,16 @@
+include ../components/content/content.pug
+include ../components/head/head.pug
+include ../components/form/form.pug
+include ../components/link/link.pug
+include ../components/button/button.pug
+include ../components/textInput/textInput.pug
+doctype html
+html(lang="ru")
+    +head('Login')
+        link(rel="stylesheet", href="../index.css")
+    +content
+        +form('Вход')
+            +textInput('Логин','text', 'login', 'form__text-input-wrapper')
+            +textInput('Пароль','password', 'password', 'form__text-input-wrapper', 'Произошла ошибка')
+            +button('Авторизоваться')(class='form__button')
+            +link('./sign-up.pug', 'Нет аккаунта?')(class='form__link')

@@ -1,0 +1,13 @@
+.button {
+    width: 280px;
+    background-color: var(--main-color);
+    color: #FFFFFF;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 8px;
+    min-height: 37px;
+}

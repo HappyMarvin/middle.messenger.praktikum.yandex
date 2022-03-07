@@ -1,0 +1,27 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "parcel src/index.pug",
+    "build": "parcel build src/index.pug",
+    "start": "parcel build src/index.pug && node server.js"
+  },
+  "keywords": [],
+  "author": "happyMarvin",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-html": "^2.2.1",
+    "@parcel/transformer-posthtml": "^2.2.1",
+    "@parcel/transformer-pug": "^2.2.1",
+    "autoprefixer": "^10.4.2",
+    "parcel": "^2.2.1",
+    "postcss": "^8.4.6"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
