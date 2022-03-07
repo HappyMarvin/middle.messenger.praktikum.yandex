@@ -1,0 +1,10 @@
+.chat-item
+    .chat-item__avatar
+    .chat-item__main-block
+        p.chat-item__name #{name}
+        p.chat-item__you(class=our ? '' : 'chat-item__you_hide') Вы:
+        p.chat-item__text #{text}
+    .chat-item__left-block
+        p.chat-item__time #{time}
+        button.chat-item__delete x
+        .chat-item__new-message(class=count ? '' : 'chat-item__new-message_hide') #{count}

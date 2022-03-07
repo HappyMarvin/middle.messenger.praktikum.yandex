@@ -1,17 +1,16 @@
-mixin textInput(placeholder, inputType, name, wrapperClass, error)
-    -
-        let inputClasses = 'form__text-input';
-        let errorClasses = 'form__error'
-        if (error) {
-            inputClasses += ' form__text-input_error';
-            errorClasses += ' form__error_active'
-            }
-        if (attributes.disabled) {
-            inputClasses += ' form__text-input_disabled';
-            }
-    div(class=wrapperClass)
-        label(for=name, class='form__label') #{placeholder}
-            input(type=inputType, class=inputClasses, name=name)&attributes(attributes)
-        p(class=errorClasses) #{error}
+-
+    let inputClasses = 'form__text-input';
+    let errorClasses = 'form__error'
+    if (error) {
+        inputClasses += ' form__text-input_error';
+        errorClasses += ' form__error_active'
+        }
+    if ({disabled}) {
+        inputClasses += ' form__text-input_disabled';
+        }
+div(class=wrapperClass)
+    label(for=name, class='form__label') #{placeholder}
+        input(type=inputType, class=inputClasses, name=name, id=inputId value=value)&attributes(attributes)
+    p(class=errorClasses) #{error}
 
 

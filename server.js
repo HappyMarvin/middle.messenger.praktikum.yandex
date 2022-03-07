@@ -5,6 +5,6 @@ const PORT = 3000;
 
 app.use(express.static('./dist'));
 
-app.listen(PORT, function () {
+app.listen(PORT, () => {
   console.log(`Chat app listening on port ${PORT}! http://localhost:3000/`);
-}); 
+});
