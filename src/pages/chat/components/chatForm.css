@@ -1,0 +1,21 @@
+.chat-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.chat-form__botton {
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    padding: 0;
+    margin: 0;
+    display: block;
+    border: none;
+    background-color: var(--main-color);
+    background-image: url('../../../images/arrow.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
