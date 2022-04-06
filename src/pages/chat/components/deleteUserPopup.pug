@@ -1,0 +1,11 @@
+- 
+    const openClass = isOpen && 'del-user-popup_opened'
+div.del-user-popup(class=openClass)
+    div.del-user-popup__popup
+        h3.del-user-popup__title Удалить пользователей
+        . 
+            !{userList}
+        . 
+            !{addUserButton}
+        . 
+            !{closeButton}

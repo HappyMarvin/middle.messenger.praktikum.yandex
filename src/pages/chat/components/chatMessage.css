@@ -1,0 +1,20 @@
+.chat-message {
+    background: #F8F8F8;
+    font-size: 12px;
+    line-height: 15px;
+    color: #1D1D1D;
+    padding: 5px;
+    display: block;
+    max-width: 80%;
+    margin: 5px;
+    border-radius: 8px;
+    margin-right: 100px;
+    overflow-wrap: anywhere;
+    align-items: flex-start;
+}
+
+.chat-message__our {
+    margin-left: 100px;
+    align-self: flex-end;
+    margin-right: 5px;
+}

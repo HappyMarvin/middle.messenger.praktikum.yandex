@@ -1,13 +1,11 @@
 import compileTemplate from './chatItem.pug';
 import './chatItem.css';
-import Block from '../../../utils/block';
+import Block, { IBlockProps } from '../../../utils/block';
 
-export interface IChatItemProps {
+export interface IChatItemProps extends IBlockProps {
     name: string;
-    text: string;
-    time: string;
-    count: number;
     our?: boolean;
+    id: number;
 }
 
 export class ChatItem extends Block {

@@ -1,0 +1,48 @@
+.del-user-popup {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.del-user-popup_opened {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.del-user-popup__popup {
+    width: 500px;
+    height: 500px;
+    border-radius: 20px;
+    background-color: white;
+    padding: 20px;
+    position: relative;
+}
+
+.del-user-popup__button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.del-user-popup__close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    height: 30px;
+    width: 30px;
+    font-size: 30px;
+    padding: 0;
+    margin: 0;
+    color: black;
+}
+
+.del-user-popup__title {
+    text-align: center;
+}
