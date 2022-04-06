@@ -15,7 +15,7 @@ export class ErrorBlock extends Block {
 
     initChildren(): void {
         const link = new Link({
-            link: './../login/login.html',
+            link: './../',
             text: 'К чатам',
         });
 

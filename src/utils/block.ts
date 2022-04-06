@@ -1,10 +1,17 @@
 import EventBus from './event-bus';
+import { replaceAll } from './helpers';
 
 export type Nullable<T> = T | null;
 export type Keys<T extends Record<string, unknown>> = keyof T;
 export type Values<T extends Record<string, unknown>> = T[Keys<T>];
 
+export interface IBlockProps {
+  events?: Record<string, any>
+}
+
 type Events = Values<typeof Block.EVENTS>;
+
+export type IChildren = Record<string, Block>
 
 export default class Block<P = any> {
   static EVENTS = {
@@ -18,21 +25,20 @@ export default class Block<P = any> {
 
   protected _element: Nullable<HTMLElement> = null;
   protected readonly props: P;
-  protected children: { [id: string]: Block } = {};
+  protected children: IChildren = {};
 
   eventBus: () => EventBus<Events>;
 
   protected state: any = {};
   protected refs: { [key: string]: HTMLElement } = {};
 
-  public constructor(propsAndChildren?: P) {
+  public constructor(propsAndChildren?: any) {
+    if (!propsAndChildren) propsAndChildren = {};
     const eventBus = new EventBus<Events>();
     const { props, children } = this.getPropsAndChildren(propsAndChildren);
 
     this.children = children;
-    this.initChildren()
-
-    this.getStateFromProps(props)
+    this.initChildren(propsAndChildren)
 
     this.props = this._makePropsProxy(props || {} as P);
     this.state = this._makePropsProxy(this.state);
@@ -51,16 +57,11 @@ export default class Block<P = any> {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  protected getStateFromProps(props: any): void {
-    this.state = {};
-  }
-
   dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
   init() {
-    // this._createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER, this.props);
   }
 
@@ -68,7 +69,7 @@ export default class Block<P = any> {
     this.componentDidMount(props);
   }
 
-  componentDidMount(props: P) {
+  componentDidMount(props?: any) {
   }
 
   _componentDidUpdate(oldProps: P, newProps: P) {
@@ -76,10 +77,11 @@ export default class Block<P = any> {
     if (!response) {
       return;
     }
+    this.initChildren(this.children);
     this._render();
   }
 
-  componentDidUpdate(oldProps: P, newProps: P) {
+  componentDidUpdate(oldProps?: any, newProps?: any): boolean | Promise<boolean> {
     return true;
   }
 
@@ -130,13 +132,13 @@ export default class Block<P = any> {
   }
 
   protected render(): DocumentFragment {
-    return new DocumentFragment
+    return document.createDocumentFragment()
   };
 
   getContent(): HTMLElement {
-    if (this.element?.parentNode?.nodeType === Node.DOCUMENT_FRAGMENT_NODE) {
+    if (this.element?.parentNode?.nodeType === document.DOCUMENT_FRAGMENT_NODE) {
       setTimeout(() => {
-        if (this.element?.parentNode?.nodeType !== Node.DOCUMENT_FRAGMENT_NODE) {
+        if (this.element?.parentNode?.nodeType !== document.DOCUMENT_FRAGMENT_NODE) {
           this.eventBus().emit(Block.EVENTS.FLOW_CDM);
         }
       }, 100)
@@ -154,8 +156,9 @@ export default class Block<P = any> {
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set(target: Record<string, unknown>, prop: string, value: unknown) {
+        const oldProp = {...target};
         target[prop] = value;
-        self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+        self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProp, { ...target });
         return true;
       },
       deleteProperty() {
@@ -197,19 +200,30 @@ export default class Block<P = any> {
 
     Object.entries(this.children).forEach(([key, child]) => {
       if (Array.isArray(child)) {
-        props[key] = child.map(ch => `<div data-id="id-${ch.id}"></div>`);
-      }
+        props[key] = child.map(ch => `<div data-id="id-${ch.id}"></div>`);        
+      }else {
       props[key] = `<div data-id="id-${child.id}"></div>`
+      }
     });
-
-    const htmlString = template({ ...props, children: this.children }); 
-    fragment.innerHTML = htmlString;
-    Object.entries(this.children).forEach(([key, child]) => {
-      const stub = fragment.content.querySelector(`[data-id="id-${child.id}"]`);
-      if (!stub) {
-        return;
+    let htmlString: string = template({ ...props, children: this.children }); 
+    htmlString = replaceAll(htmlString,'>,<', '><');
+    fragment.innerHTML = htmlString;     
+    Object.entries(this.children).forEach(([, child]) => {
+      if (Array.isArray(child)) {
+        child.forEach(component => {
+            const stub = fragment.content.querySelector(`[data-id="id-${component.id}"]`);
+          if (!stub) {
+          return;
+        } 
+          stub.replaceWith(component.getContent()); 
+        })
+      } else {
+        const stub = fragment.content.querySelector(`[data-id="id-${child.id}"]`);
+        if (!stub) {
+          return;
+        } 
+        stub.replaceWith(child.getContent());
       } 
-      stub.replaceWith(child.getContent());    
     });
     return fragment.content;
   }
@@ -223,7 +237,7 @@ export default class Block<P = any> {
     this.getContent().style.display = 'none';
   }
 
-  initChildren(prop?: any) {
+  initChildren(props?: any) {
 
   }
 }

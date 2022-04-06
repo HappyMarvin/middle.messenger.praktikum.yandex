@@ -1,76 +1,97 @@
-const METHODS = {
-    GET: 'GET',
-    POST: 'POST',
-    PUT: 'PUT',
-    DELETE: 'DELETE',
+export enum METHODS {
+        GET = 'GET',
+        POST = 'POST',
+        PUT = 'PUT',
+        DELETE = 'DELETE',
+        PATCH = 'PATCH'
 };
+const DEFAULT_CONTENT_TYPE = 'application/json'
 
-function queryStringify(data: any) {
-if (typeof data !== 'object') {
-        throw new Error('Data must be object');
-}
+type Options = {
+        method: METHODS;
+        data?: any;
+        contentType?: string;
+};
+export const API_URL = 'https://ya-praktikum.tech/api/v2';
+export const RESOURSEC_URL = 'https://ya-praktikum.tech';
+export default class HTTPTransport {
+        static API_URL = API_URL;
+        protected endpoint: string;
 
-const keys = Object.keys(data);
-return keys.reduce((result, key, index) => {
-return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
-}, '?');
-}
+        constructor(endpoint: string) {
+                this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
+        }
 
-class HTTPTransport {
-    get = (url: string, options = {} as any) => {
-            return this.request(url, {...options, method: METHODS.GET}, options.timeout);
-    };
+        public get<Response>(path = '/'): Promise<Response> {
+                return this.request<Response>(this.endpoint + path);
+        }
 
-    post = (url: string, options = {} as any) => {
-            return this.request(url, {...options, method: METHODS.POST}, options.timeout);
-    };
+        public post<Response = void>(path: string, data?: unknown): Promise<Response> {
+                return this.request<Response>(this.endpoint + path, {
+                        method: METHODS.POST,
+                        data,
+                });
+        }
 
-    put = (url: string, options = {} as any) => {
-            return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
-    };
+        public put<Response = void>(path: string, data: unknown, contentType?: string): Promise<Response> {
+                return this.request<Response>(this.endpoint + path, {
+                        method: METHODS.PUT,
+                        data,
+                        contentType
+                });
+        }
 
-    delete = (url: string, options = {} as any) => { 
-            return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
-    };
+        public patch<Response = void>(path: string, data: unknown): Promise<Response> {
+                return this.request<Response>(this.endpoint + path, {
+                        method: METHODS.PATCH,
+                        data,
+                });
+        }
 
-    request = (url: string, options = {} as any, timeout = 5000) => {
-            const {headers = {}, method, data} = options;
+        public delete<Response>(path: string, data?: unknown): Promise<Response> {
+                return this.request<Response>(this.endpoint + path, {
+                        method: METHODS.DELETE,
+                        data
+                });
+        }
 
-            return new Promise(function(resolve, reject) {
-                    if (!method) {
-                            reject('No method');
-                            return;
-                    }
+        private request<Response>(url: string, options: Options = { method: METHODS.GET }): Promise<Response> {
+                const { method, data } = options;
 
-                const xhr = new XMLHttpRequest();
-                    const isGet = method === METHODS.GET;
+                return new Promise((resolve, reject) => {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open(method, url);
 
-                xhr.open(
-                            method, 
-                            isGet && !!data
-                                    ? `${url}${queryStringify(data)}`
-                                    : url,
-                    );
+                        xhr.onreadystatechange = (e) => {
 
-                    Object.keys(headers).forEach(key => {
-                            xhr.setRequestHeader(key, headers[key]);
-                    });
-            
-                xhr.onload = function() {
-                      resolve(xhr);
-                };
-            
-                xhr.onabort = reject;
-                xhr.onerror = reject;
-            
-                xhr.timeout = timeout;
-                xhr.ontimeout = reject;
-                    
-                  if (isGet || !data) {
-                        xhr.send();
-                    } else {
-                            xhr.send(data);
-                    }
-          });
-    };
+                                if (xhr.readyState === XMLHttpRequest.DONE) {
+                                        if (xhr.status < 400) {
+                                                resolve(xhr.response);
+                                        } else {
+                                                reject(xhr.response);
+                                        }
+                                }
+                        };
+
+                        xhr.onabort = () => reject({ reason: 'abort' });
+                        xhr.onerror = () => reject({ reason: 'network error' });
+                        xhr.ontimeout = () => reject({ reason: 'timeout' });
+
+                        const contentType = options.contentType || DEFAULT_CONTENT_TYPE;
+                        if (contentType === DEFAULT_CONTENT_TYPE) {
+                                xhr.setRequestHeader('content-type', contentType);
+                        }
+
+                        xhr.withCredentials = true;
+                        xhr.responseType = 'json';
+
+                        if (method === METHODS.GET || !data) {
+                                xhr.send();
+                        } else {
+                                let sendData = data;
+                                if (contentType === 'application/json') sendData = JSON.stringify(data) 
+                                xhr.send(sendData);
+                        }
+                });
+        }
 }

@@ -1,0 +1,13 @@
+- 
+    const openClass = isOpen && 'add-user-popup_opened'
+div.add-user-popup(class=openClass)
+    div.add-user-popup__popup
+        h3.add-user-popup__title Добавить пользователя
+        . 
+            !{searchForm}
+        . 
+            !{userList}
+        . 
+            !{addUserButton}
+        . 
+            !{closeButton}

@@ -1,7 +1,0 @@
-.stub {
-    border: 1px solid var(--main-color);
-    border-radius: 10px;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-}

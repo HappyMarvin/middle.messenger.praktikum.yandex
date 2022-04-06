@@ -16,12 +16,16 @@
     grid-template-columns: 1fr;
     grid-template-rows: 102px 1fr;
     padding: 0 10px;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .main-chat__chat-wrapper {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 54px 1fr 54px;
+    height: 100vh;
+    overflow: hidden
 }
 
 .main-chat__search {
@@ -71,15 +75,30 @@
     color: #1D1D1D;
 }
 
-.main-chat__message {
-    background: #F8F8F8;
-    font-size: 12px;
-    line-height: 15px;
-    color: #1D1D1D;
-    padding: 10px;
-    display: block;
-    width: max-content;
-    max-width: 80%;
-    margin: 15px;
-    border-radius: 8px;
+.main-chat__chat-items-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+.main-chat__chat {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    overflow: auto;
+}
+
+.main-chat__add-user-button {
+    margin-left: auto;
+    width: 180px;
+}
+
+.main-chat__del-user-button {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 180px;
+}
+
+.main-chat__chat-items {
+    overflow: auto;
 }

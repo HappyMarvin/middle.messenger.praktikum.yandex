@@ -6,6 +6,7 @@ export interface IButtonProps {
     text: string;
     className: string;
     events?: any;
+    type?: string
 }
 
 export class Button extends Block {
