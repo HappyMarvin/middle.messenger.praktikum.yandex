@@ -1,6 +1,6 @@
-## PR 2-й спринт:
+## PR 3-й спринт:
 
-https://github.com/HappyMarvin/middle.messenger.praktikum.yandex/pull/3
+https://github.com/HappyMarvin/middle.messenger.praktikum.yandex/pull/4
 
 ### Ветка, в которой делаете задания спринта, должна называться sprint_i, где i - номер спринта. Не переименовывайте её.
 
@@ -16,7 +16,3 @@ https://github.com/HappyMarvin/middle.messenger.praktikum.yandex/pull/3
 ## Макет
 
 https://www.figma.com/file/TwqcgVrBrzWGBtp36z6q26/Chat-(Copy)?node-id=0%3A1
-
-## Проект на Netlify
-
-https://romantic-montalcini-deffe4.netlify.app/
