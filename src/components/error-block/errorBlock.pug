@@ -1,6 +1,5 @@
-include ../link/link.pug
-mixin error-block(error, text)
-    .error-block
-        h1.error-block__number #{error}
-        p.error-block__text #{text}
-        +link('../index.pug', 'К чатам')
+.error-block
+    h1.error-block__number #{error}
+    p.error-block__text #{text}
+    . 
+        !{link}

@@ -1,0 +1,9 @@
+{
+    "ignorePatterns": [".js", "*.html"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+      "max-len": [1, 180],
+      "max-params": [2, 3]
+      }
+  } 
