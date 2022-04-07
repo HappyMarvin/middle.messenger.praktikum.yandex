@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     router.use('/sign-up/', SignUpForm);
     router.use('/sign-in/', LoginForm);
     router.use('/profile/', ProfileForm);
+    router.use('/profile', ProfileForm);
     router.use('/', MainChat);
     router.use('*', ErrorBlock, {
         error: '404',
