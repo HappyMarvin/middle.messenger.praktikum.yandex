@@ -1,7 +1,6 @@
 import Block from '../../utils/block';
 import compileTemplate from './form.pug';
 import './form.css';
-import { Button } from '../../utils/comp/button';
 
 interface IFormProps {
     title: string;
@@ -16,11 +15,11 @@ export class Form extends Block {
 
     }
 
-    initChildren(): void {
-        this.children.button = new Button({
-            label: 'click it!'
-        });
-    }
+    // initChildren(): void {
+    //     this.children.button = new Button({
+    //         label: 'click it!'
+    //     });
+    // }
 
     render() {
         return this.compile(compileTemplate, {...this.props})
