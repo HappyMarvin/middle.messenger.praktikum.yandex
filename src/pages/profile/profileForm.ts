@@ -18,8 +18,8 @@ export interface IProfileFormProps extends IFormProps, IUser{
 
 class ProfileForm extends Form {
     constructor(props: IProfileFormProps) {
-        // props.title = 'Профиль';
-        // props.className = 'profile__form';
+        props.title = 'Профиль';
+        props.className = 'profile__form';
         super(props);
     }
 

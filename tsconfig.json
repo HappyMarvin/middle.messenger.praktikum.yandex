@@ -3,11 +3,11 @@
     "outDir": "dist",
     "target": "es2016",
     "declaration": false,
+    "module": "commonjs",
     "noImplicitAny": true,
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "noUnusedParameters": false,
     "sourceMap": true,
-    "strictNullChecks": true,
-    "moduleResolution": "node"
-   },
+    "strictNullChecks": true 
+   }
 } 

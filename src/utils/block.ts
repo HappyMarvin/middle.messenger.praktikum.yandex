@@ -24,7 +24,7 @@ export default class Block<P = any> {
   public id = Math.random().toString(36).substr(2, 9);
 
   protected _element: Nullable<HTMLElement> = null;
-  public props: P;
+  protected readonly props: P;
   protected children: IChildren = {};
 
   eventBus: () => EventBus<Events>;
