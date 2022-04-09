@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev": "parcel src/pages/**/*.html",
-    "build": "webpack --mode production",
+    "build": "parcel build src/pages/index.html src/pages/**/*.html",
     "start": "parcel build src/pages/**/*.html && node server.js",
     "test": "mocha"
   },
