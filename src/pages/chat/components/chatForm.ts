@@ -4,6 +4,7 @@ import './chatForm.css';
 import { Form, IFormInput } from '../../../utils/form';
 import { Button } from '../../../components/button/button';
 import { MessageInput } from './messageInput';
+import messageController from '../../../controllers/message-controller';
 
 interface IChatFormProps {
     title: string;
@@ -32,6 +33,14 @@ export class ChatForm extends Form {
 
     initChildren(): void {
         super.initChildren(formInputs, MessageInput);
+    }
+
+    onSubmit(e: Event): void {
+        super.onSubmit(e);
+        if (this.valid) {
+            const message = this.getAllInputValues().message;
+            messageController.addMessage(message as string);
+        }
     }
 
     render() {

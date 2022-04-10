@@ -3,7 +3,7 @@ import Block from "./block";
 
 
 export interface IFormProps {
-    title: string;
+    title?: string;
     className?: string;
     events?: Record<string, any>
 }
@@ -13,12 +13,14 @@ export interface IFormInput {
     regExp?: RegExp;
     component?: Block;
     props: ITextInputProps;
+    noValidate?: boolean
 }
 
 export class Form extends Block {
     inputs: Record<string, IFormInput>;
+    valid: boolean;
     constructor(props: IFormProps) {
-        if (!props.events) {
+        if (!props?.events) {
             props.events = {};
         }
         props.events.submit = (e: Event) => {
@@ -31,13 +33,19 @@ export class Form extends Block {
     initChildren(formInputs: Record<string, IFormInput>, inputComponent: any = TextInput): void {
         this.inputs = this.createInputs(formInputs, inputComponent);
         for (let input in this.inputs) {
-            this.children[input] = this.inputs[input].component as Block;
+            if(!this.children[input]) {
+                this.children[input] = this.inputs[input].component as Block;
+            }
         }
     }
 
-    createInputs(inputs: Record<string, IFormInput>, inputComponent: any = TextInput): any {
+    createInputs(inputs: Record<string, IFormInput>, inputComponent: any = TextInput): any { 
         for (let key in inputs) {
-            inputs[key].component = new inputComponent(inputs[key].props);
+            if (!inputs[key].component) {
+                inputs[key].component = new inputComponent(inputs[key].props);
+            } else {
+                inputs[key].component?.setProps(inputs[key].props);
+            }
         }
         return inputs;
     }
@@ -46,7 +54,13 @@ export class Form extends Block {
         this.addInputsEvents();
     }
 
+    componentDidUpdate(oldProps: any, newProps: any): boolean {
+        this.addInputsEvents();
+        return true
+    }
+
     checkInput(e: Event | null, input: IFormInput, inputElement: HTMLInputElement) {
+        if (input.noValidate) return true
         if (input.regExp?.test(inputElement.value) && input.props.error === '') {
             return true
         }
@@ -79,8 +93,8 @@ export class Form extends Block {
     }
 
     addInputEvent(input: IFormInput) {
-        const inputElement = document.getElementById(input.props.inputId) as HTMLInputElement;
-        inputElement.addEventListener('input', (e) => {
+        const inputElement = document.getElementById(input.props?.inputId) as HTMLInputElement;
+        inputElement?.addEventListener('input', (e) => {
             input.props.value = (e.target as HTMLInputElement).value;
         })
         this.addInputValidation(input);
@@ -89,20 +103,16 @@ export class Form extends Block {
     addInputsEvents() {
         for (let key in this.inputs) {
             const input = this.inputs[key]
-            this.addInputEvent(input);
+            if (!input.noValidate) this.addInputEvent(input);
         }
     }
 
     addInputValidation(input: IFormInput) {
-        const inputElement = document.getElementById(input.props.inputId) as HTMLInputElement;
+        const inputElement = document.getElementById(input.props?.inputId) as HTMLInputElement;
         inputElement?.addEventListener('focus', (e) => {
             this.checkInput(e, input, inputElement);
         });
-        inputElement.addEventListener('input', (e) => {
-            input.props.value = (e.target as HTMLInputElement).value;
-            this.checkInput(e, input, inputElement);
-        })
-        inputElement.addEventListener('blur', (e) => {
+        inputElement?.addEventListener('input', (e) => {
             input.props.value = (e.target as HTMLInputElement).value;
             this.checkInput(e, input, inputElement);
         })
@@ -111,11 +121,9 @@ export class Form extends Block {
 
     onSubmit(e: Event) {
         e.preventDefault;
-        const valid = this.checkAllInputs()
-        if (!valid) {
-            console.log('Форма заполнена не верно!');
-        } else {
-            console.log(this.getAllInputValues());
+        this.valid = this.checkAllInputs()
+        if (!this.valid) {
+            console.error('Форма заполнена не верно!');
         }
     }
 
@@ -130,16 +138,13 @@ export class Form extends Block {
         return result;
     }
 
-    getAllInputValues(): Record<string, string>[] {
-        const values = []
+    getAllInputValues(): Record<string, unknown> {
+        const values: Record<string, unknown> = {};
         for (let input in this.inputs) {
             const value = this.inputs[input].props.value;
             const name = this.inputs[input].props.name;
-            values.push({
-                name,
-                value
-            })
+            values[name] = value;
         }
-        return values
+        return values;
     }
 }

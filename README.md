@@ -12,6 +12,7 @@ https://github.com/HappyMarvin/middle.messenger.praktikum.yandex/pull/4
 - `npm install` — установка.
 - `npm run build` — сборка.
 - `npm start` — сборка + запуск (express).
+- `npm run test` — запукс тестов.
 
 ## Макет
 

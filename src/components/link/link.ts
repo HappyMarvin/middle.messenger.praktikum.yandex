@@ -6,6 +6,7 @@ export interface ILinkProps {
     link: string;
     text: string;
     className?: string;
+    events?: any;
 }
 
 export class Link extends Block {

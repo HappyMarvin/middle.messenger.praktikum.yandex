@@ -1,17 +1,36 @@
+- 
+    let chatName
+    if (activeChat) {
+        chatName = activeChat.chatName
+    } else {
+        chatName = '';
+    }
 div.main-chat
     .main-chat__items-wrapper
         .main-chat__search
-            a.main-chat__profile-link(href="./../profile/profile.html") Профиль >
+            a.main-chat__profile-link(href="./../profile/") Профиль >
             input.main-chat__search-input(placeholder='Поиск')
         .main-chat__chat-items-wrapper
+            div.main-chat__chat-items
+                . 
+                    !{chatItems}
             . 
-                !{chatItem}
+                !{newChatForm}
     .main-chat__chat-wrapper
         .main-chat__title-wrapper
             .main-chat__avatar
-            h1.main-chat__title Mike
+            h1.main-chat__title #{chatName}
+            . 
+                !{addUserButton}
+            . 
+                !{deleteUserButton}
         .main-chat__chat
-            p.main-chat__message Hello!
+            . 
+                !{chatMessages}
         .main-chat__form-wrapper
             . 
                 !{chatForm}
+    . 
+        !{addUserPopup}
+    . 
+        !{deleteUserPopup}

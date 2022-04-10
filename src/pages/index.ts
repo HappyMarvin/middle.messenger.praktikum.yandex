@@ -1,9 +1,24 @@
-import { renderDOM } from '../utils/renderDOM';
+import { Router } from './../utils/router';
 import './index.css'
-import { Stub } from './stub';
+import SignUpForm from './sign-up/signUpForm';
+import LoginForm from './login/loginForm';
+import ProfileForm from './profile/profileForm';
+import MainChat from './chat/components/mainChat';
+import { ErrorBlock } from '../components/error-block/errorBlock';
+import authController from '../controllers/auth-controller';
 
-document.addEventListener('DOMContentLoaded', ()=>{
+export const router = new Router('#app');
 
-    const stub = new Stub({});
-    renderDOM('#app', stub);
+document.addEventListener('DOMContentLoaded', () => {
+    router.use('/sign-up/', SignUpForm);
+    router.use('/sign-in/', LoginForm);
+    router.use('/profile/', ProfileForm);
+    router.use('/', MainChat);
+    router.use('*', ErrorBlock, {
+        error: '404',
+        text: 'Не туда попали.'
+    });
+    router.start();
+    authController.getUserData();
 })
+
