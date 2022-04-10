@@ -1,6 +1,6 @@
-## PR 3-й спринт:
+## PR 4-й спринт:
 
-https://github.com/HappyMarvin/middle.messenger.praktikum.yandex/pull/4
+https://github.com/HappyMarvin/middle.messenger.praktikum.yandex/pull/5
 
 ### Ветка, в которой делаете задания спринта, должна называться sprint_i, где i - номер спринта. Не переименовывайте её.
 
